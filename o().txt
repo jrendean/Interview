@@ -1,0 +1,17 @@
+binary search - o(log N)
+for loop = o(n)
+2 for loops = o(n^2)
+
+
+
+order - best to worse
+----------------------
+c	- constant
+log N	- log
+log^2 N	- log squared
+N	- linear
+N log N	- n log n
+N^2	- quadratic
+N^3	- cubic
+2^N	- exponential
+

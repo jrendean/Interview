@@ -1,0 +1,142 @@
+AJAX
+----
+What is it?
+	Asynchronous JavaScript And XML
+How does it work?
+	Out of band server request with delegate callbacks that update UI elements. The return value is typically XML (sometimes JSON) and that is loaded into an XML DOM and parsed.
+
+Full Example
+------------
+	
+	this.Net=new function(){
+		var m_HttpRequest=GetHttpRequest();
+		
+		this.Request=function(url,postData,callback){
+			m_HttpRequest.open("GET",url,true);
+			m_HttpRequest.onreadystatechange=function(){
+				if (m_HttpRequest.readyState == 4){
+					if (m_HttpRequest.status == 200){
+						callback(m_HttpRequest.responseXML);}}}
+			m_HttpRequest.send(postData);}
+		
+		function GetHttpRequest(){
+			if (window.XMLHttpRequest){
+				m_HttpRequest=new XMLHttpRequest();}
+			else if (window.ActiveXObject){
+				m_HttpRequest=new ActiveXObject("Microsoft.XMLHTTP");}
+			return m_HttpRequest;}
+	}
+	
+	// call back function
+	function XmlDataCallback(xmlResponse){
+		// load the XML Dom from the string input (xmlResponse)
+		
+		// iterrate through nodes
+
+		// update UI elements
+	}
+
+
+	// make the call
+	Net.Request('GetXmlData.asmx', null, XmlDataCallback);
+
+
+
+
+Cross Browser AJAX httprequest
+------------------------------
+	var httpRequest;
+	if (window.XMLHttpRequest){
+		// FF
+	        httpRequest=new XMLHttpRequest();}
+	else if (window.ActiveXObject){
+		// IE
+		try{
+			httpRequest=new ActiveXObject("Microsoft.XMLHTTP");}
+		catch(e){}}
+
+
+
+Cross browser xml access
+------------------------
+	if (!window.ActiveXObject){
+		// FF
+		Xml = document.implementation.createDocument("","",null);}
+	else{
+		// IE
+		Xml = new ActiveXObject("Microsoft.XMLDOM");}
+
+
+Question about above
+--------------------
+Why should you use Microsoft.XMLDOM and not MSXML2.DOMDocument.4.0
+	The latter is tied to a specific version that may not be present on the client
+
+
+
+
+OO JavaScript
+-------------
+var MyClass = new function()
+{
+	// private field
+	var hidden = "";
+
+	// public field
+	this.Visible = "";
+
+	// private function
+	myFunc = function(){...}; 
+
+	// public function
+	this.myFunc2 = function(){...};
+}
+
+
+
+JSON
+----
+What is it?
+	JavaScript Object Notation (shorthand way of OO JavaScript)
+How does it work?
+	EMCA standards for declaring objects in JavaScript
+show an example?
+	var Browser={
+		OS:"WinXP",
+		Type:function(){return "IE";},
+		Version:7}
+The above is the same as in OO JavaScript:
+	var Browser= new function(){
+		this.OS="WinXP";
+		this.Type=function(){
+			return "IE";}
+		this.Version=7;}
+
+
+
+General Questions
+-----------------
+FF and IE differences with CSS?
+	The level of adherence to w3c standard (IE7 is better about it, but <= IE6 has its own processing)
+
+How do style override in the DOM?
+	Element base style attributes (<div style="color:red">) trump...,
+	Inline style declarations (<style>DIV{color:green;}) trump...,
+	Linked in style sheet files (<link rel="stylesheet" href="stylesheet.css" />)
+
+Some FF and IE differences with JavaScript?
+	FF does not have ActiveX.
+	Accessing style properties?
+
+How do you debug JavaScript?
+	Add a "debugger;" in the script, this opens the script debugger installed on the client.
+	Add in "alert(...)" calls to have popups show variable states.
+
+
+
+Javascript Performance in IE
+----------------------------
+Some function references are not static. For example: Calling document.createElement creates a new function in memory every time. You should make pointers to them (var ce = document.createElement;) and then "ce('div');" can be reused without additional memory requirements.
+ 
+Does this work in FF?
+	NO!
